@@ -33,22 +33,23 @@ public class App {
         try {
             listBooks = savable.loadBookFromStorage();
         } catch (Exception e) {
-            System.out.println("Нет файла Books.txt");
+            System.out.println("Нет данных");
         }
        
         try {
             listReaders = savable.loadReaderFromStorage();
         } catch (Exception e) {
-            System.out.println("Нет файла Readers.txt");
+            System.out.println("Нет данных");
         }
         try {
             listHistories = savable.loadHistoriesFromStorage();
         } catch (Exception e) {
-            System.out.println("Нет файла Readers.txt");
+            System.out.println("Нет данных");
         }
     }
     
     public void run() {
+        
         Scanner scanner = new Scanner(System.in);
         System.out.println("---- Наша библиотека ----");
         String repeat = "r";

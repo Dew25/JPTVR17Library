@@ -9,6 +9,7 @@ import entity.Book;
 import entity.History;
 import entity.Reader;
 import interfaces.Saveble;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -47,27 +48,54 @@ public class StorageInBase implements Saveble{
 
     @Override
     public List<Book> loadBookFromStorage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.tx.begin();
+           List<Book> listBooks = em.createQuery("SELECT b FROM Book b").getResultList();
+        this.tx.commit();
+        return listBooks;
     }
 
     @Override
     public List<Reader> loadReaderFromStorage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.tx.begin();
+           List<Reader> listReaders = em.createQuery("SELECT r FROM Reader r").getResultList();
+        this.tx.commit();
+        return listReaders;
     }
 
     @Override
     public void saveReaders(List<Reader> listReaders) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int n = listReaders.size();
+        this.tx.begin();
+            for(int i=0; i<n;i++){
+                if(listReaders.get(i).getId() == null){
+                    em.persist(listReaders.get(i));
+                }else{
+                    em.merge(listReaders.get(i));
+                }
+            }
+        this.tx.commit();
     }
 
     @Override
     public List<History> loadHistoriesFromStorage() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.tx.begin();
+           List<History> listHistories = em.createQuery("SELECT h FROM History h").getResultList();
+        this.tx.commit();
+        return listHistories;    
     }
 
     @Override
     public void saveHistories(List<History> listHistories) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int n = listHistories.size();
+        this.tx.begin();
+            for(int i=0; i<n;i++){
+                if(listHistories.get(i).getId() == null){
+                    em.persist(listHistories.get(i));
+                }else{
+                    em.merge(listHistories.get(i));
+                }
+            }
+        this.tx.commit();
     }
     
 }
